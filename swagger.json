@@ -25,8 +25,20 @@
                 "security": [{
                     "Bearer": []
                 }],
-                "summary": "PGH Works activity class",
+                "summary": "Activity class subscription",
                 "description": "Subscribe to activity feed",
+                "parameters": [],
+                "responses": {}
+            },
+            "post": {
+                "tags": [
+                    "PGH Works"
+                ],
+                "security": [{
+                    "Bearer": []
+                }],
+                "summary": "Activity class update",
+                "description": "Trigger update of activity feed",
                 "parameters": [],
                 "responses": {}
             }
