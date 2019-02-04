@@ -1,12 +1,9 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const bearerToken = require('express-bearer-token')
 const cors = require('cors')
 const http = require("http")
 const socketIo = require("socket.io")
 const server = http.createServer(app)
 const fetch = require("node-fetch")
-const checkToken = require('./token')
 const io = socketIo(server)
 global.Headers = fetch.Headers
 
@@ -22,12 +19,6 @@ const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json')
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-// bearer token
-app.use(bearerToken())
-
-// body parser
-app.use(bodyParser.json())
-
 // enable cors on all requests
 app.use(cors())
 
@@ -35,6 +26,7 @@ app.use(cors())
 app.use(require('morgan')('combined'))
 
 // socket
+// TODO: routing
 io.on("connection", socket => {
   //TODO: authorization
   () => sendData(socket)
