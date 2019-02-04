@@ -17,5 +17,3 @@ Er, that's the intention.  I haven't actually made it yet...
 Swagger UI:
 
 https://restless.azurewebsites.us/docs
-
-# restless
