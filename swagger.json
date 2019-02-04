@@ -7,7 +7,7 @@
     },
     "host": "restless.azurewebsites.us",
     "schemes": [
-        "https"
+        "websockets"
     ],
     "securityDefinitions": {
         "Bearer": {
@@ -17,5 +17,19 @@
         }
     },
     "paths": {
+        "/pghWorks/activity": {
+            "get": {
+                "tags": [
+                    "PGH Works"
+                ],
+                "security": [{
+                    "Bearer": []
+                }],
+                "summary": "PGH Works activity class",
+                "description": "Subscribe to activity feed",
+                "parameters": [],
+                "responses": {}
+            }
+        }
     }
 }
