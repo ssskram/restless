@@ -6,7 +6,7 @@ module.exports = function (io) {
     // PGH Works
     // activity feed
     const activity = io
-        .of('/activity')
+        .of('/pghWorks/activity')
         .on('connection', function (socket) {
             // when client connects, send entirety of activity class, cartegraph
             fetch("https://cartegraphapi.azurewebsites.us/pghWorks/activity", {

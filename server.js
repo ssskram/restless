@@ -17,7 +17,8 @@ app.use(cors())
 app.use(require('morgan')('combined'))
 
 // endpoints
-require('./routes/pghWorks')(io); 
+require('./routes/pghWorks')(io)
+
 
 // Production error handler
 if (app.get('env') === 'production') {
