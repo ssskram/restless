@@ -8,19 +8,26 @@ module.exports = function (io) {
     const activity = io
         .of('/pghWorks/activity')
         .on('connection', function (socket) {
-            // when client connects, send entirety of activity class, cartegraph
-            fetch("https://cartegraphapi.azurewebsites.us/pghWorks/activity", {
-                    method: 'get',
-                    headers: new Headers({
-                        'Authorization': 'Bearer ' + process.env.REACT_APP_CART_API
+
+            console.log('client connected')
+
+            // send client activity class
+            socket.on('subscribe', () => {
+                console.log('client subscribed')
+                fetch("https://cartegraphapi.azurewebsites.us/pghWorks/activity", {
+                        method: 'get',
+                        headers: new Headers({
+                            'Authorization': 'Bearer ' + process.env.REACT_APP_CART_API
+                        })
                     })
-                })
-                .then(res => res.json())
-                .then(data => socket.emit('data', data))
+                    .then(res => res.json())
+                    .then(data => socket.emit('data', data))
+            })
 
             // called from client when new data is posted to activity class, cartegraph
             socket.on('update', () => {
-                // broadcast new data to all users here
+                console.log('client updating')
+                // broadcast new data to all clients
                 fetch("https://cartegraphapi.azurewebsites.us/pghWorks/activity", {
                         method: 'get',
                         headers: new Headers({
