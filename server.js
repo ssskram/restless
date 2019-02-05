@@ -1,11 +1,8 @@
-// Setup basic express server
 var app = require('express')()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
 const bodyParser = require('body-parser')
-const fetch = require("node-fetch")
 const cors = require('cors')
-global.Headers = fetch.Headers
 
 // import env variables
 require('dotenv').config()
@@ -19,34 +16,8 @@ app.use(cors())
 // logging
 app.use(require('morgan')('combined'))
 
-// PGH Works
-// activity feed
-var activity = io
-  .of('/activity')
-  .on('connection', function (socket) {
-    // when client connects, send entirety of activity class, cartegraph
-    fetch("https://cartegraphapi.azurewebsites.us/pghWorks/activity", {
-        method: 'get',
-        headers: new Headers({
-          'Authorization': 'Bearer ' + process.env.REACT_APP_CART_API
-        })
-      })
-      .then(res => res.json())
-      .then(data => socket.emit('data', data))
-
-    // called from client when new data is posted to activity class, cartegraph
-    socket.on('update', () => {
-      // broadcast new data to all users here
-      fetch("https://cartegraphapi.azurewebsites.us/pghWorks/activity", {
-          method: 'get',
-          headers: new Headers({
-            'Authorization': 'Bearer ' + process.env.REACT_APP_CART_API
-          })
-        })
-        .then(res => res.json())
-        .then(data => activity.emit('data', data))
-    })
-  })
+// endpoints
+require('./routes/pghWorks')(io); 
 
 // Production error handler
 if (app.get('env') === 'production') {
@@ -56,7 +27,7 @@ if (app.get('env') === 'production') {
   })
 }
 
-app.set('port', process.env.PORT || 3000)
-app.listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'))
+var port = process.env.PORT || 3000
+server.listen(port, () => {
+  console.log('Server listening at port %d', port)
 })
