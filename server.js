@@ -18,7 +18,6 @@ app.use(require('morgan')('combined'))
 
 // endpoints
 require('./routes/pghWorks')(io)
-require('./routes/accMobile')(io)
 
 // Production error handler
 if (app.get('env') === 'production') {
